@@ -19,7 +19,7 @@ import { buildReportRows } from './types';
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-app.use(cors({ origin: 'http://localhost:5173' }));
+app.use(cors({ origin: 'https://borelog.velciti.com' }));
 app.use(express.json({ limit: '5mb' }));
 
 /** `BoreLog_[BoreholeNo]_[ProjectName].ext`, invalid filename characters stripped. */
