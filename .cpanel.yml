@@ -1,0 +1,6 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/velcitic/repositories/velciti-bore-log-backend
+    - cd $DEPLOYPATH && npm install --production && npm run build
+    - touch /home/velcitic/borelog-api/backend/tmp/restart.txt
