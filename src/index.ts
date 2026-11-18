@@ -59,7 +59,7 @@ app.post('/api/export-pdf', async (req: Request, res: Response) => {
 
     // Navigate to the frontend with bore log data injected via URL hash
     // The frontend reads the hash to load the bore log data for PDF rendering
-    const frontendUrl = 'http://localhost:5173/?mode=pdf';
+    const frontendUrl = 'https://borelog.velciti.com/?mode=pdf';
     await page.goto(frontendUrl, { waitUntil: 'networkidle', timeout: 30000 });
 
     // Inject bore log data into the page and trigger render
@@ -120,7 +120,7 @@ app.post('/api/export-excel', async (req: Request, res: Response) => {
     });
     const page = await browser.newPage();
     await page.setViewportSize({ width: 794, height: 1123 });
-    await page.goto('http://localhost:5173/?mode=pdf', { waitUntil: 'networkidle', timeout: 30000 });
+    await page.goto('https://borelog.velciti.com/?mode=pdf', { waitUntil: 'networkidle', timeout: 30000 });
     await page.evaluate((data) => {
       (window as any).__BORE_LOG_DATA__ = data;
       window.dispatchEvent(new CustomEvent('bore-log-data', { detail: data }));
@@ -167,7 +167,7 @@ app.post('/api/export-svg', async (req: Request, res: Response) => {
   try {
     browser = await chromium.launch({ headless: true, args: ['--no-sandbox'] });
     const page = await browser.newPage();
-    await page.goto('http://localhost:5173/?mode=pdf', { waitUntil: 'networkidle' });
+    await page.goto('https://borelog.velciti.com/?mode=pdf', { waitUntil: 'networkidle' });
     await page.evaluate((data) => {
       (window as any).__BORE_LOG_DATA__ = data;
       window.dispatchEvent(new CustomEvent('bore-log-data', { detail: data }));
