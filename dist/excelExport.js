@@ -242,10 +242,12 @@ async function buildExcelWorkbook(boreLog, graphImage) {
     const termRow = lastDataRow + 1;
     mergeAndFill(termRow, 1, LAST_COL, `Borehole Terminated @ ${bi.finalDepth.toFixed(2)}m`, { fill: DARK_GREEN, size: 12, heightPt: 18, border: medium });
     // ── Embed the N-value graph image over the graph column, header through last data row ──
-    const imageId = wb.addImage({ buffer: graphImage, extension: 'png' });
-    ws.addImage(imageId, {
-        tl: { col: COL.graph - 1, row: hdrRow1 - 1 },
-        br: { col: COL.graph, row: lastDataRow },
-    });
+    if (graphImage) {
+        const imageId = wb.addImage({ buffer: graphImage, extension: 'png' });
+        ws.addImage(imageId, {
+            tl: { col: COL.graph - 1, row: hdrRow1 - 1 },
+            br: { col: COL.graph, row: lastDataRow },
+        });
+    }
     return wb;
 }

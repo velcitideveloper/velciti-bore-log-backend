@@ -69,7 +69,7 @@ function colLetter(n: number): string {
  * agreed fallback it's embedded as a picture over that one column;
  * every other cell in the sheet stays native and editable.
  */
-export async function buildExcelWorkbook(boreLog: BoreLog, graphImage: Buffer): Promise<ExcelJS.Workbook> {
+export async function buildExcelWorkbook(boreLog: BoreLog, graphImage?: Buffer): Promise<ExcelJS.Workbook> {
   const wb = new ExcelJS.Workbook();
   wb.creator = 'Velciti Bore Log Generator';
   wb.created = new Date();
@@ -247,11 +247,13 @@ export async function buildExcelWorkbook(boreLog: BoreLog, graphImage: Buffer): 
   mergeAndFill(termRow, 1, LAST_COL, `Borehole Terminated @ ${bi.finalDepth.toFixed(2)}m`, { fill: DARK_GREEN, size: 12, heightPt: 18, border: medium });
 
   // ── Embed the N-value graph image over the graph column, header through last data row ──
-  const imageId = wb.addImage({ buffer: graphImage as any, extension: 'png' });
-  ws.addImage(imageId, {
-    tl: { col: COL.graph - 1, row: hdrRow1 - 1 },
-    br: { col: COL.graph, row: lastDataRow },
-  } as ExcelJS.ImageRange);
+  if (graphImage) {
+    const imageId = wb.addImage({ buffer: graphImage as any, extension: 'png' });
+    ws.addImage(imageId, {
+      tl: { col: COL.graph - 1, row: hdrRow1 - 1 },
+      br: { col: COL.graph, row: lastDataRow },
+    } as ExcelJS.ImageRange);
+  }
 
   return wb;
 }
