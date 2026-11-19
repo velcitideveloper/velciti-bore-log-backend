@@ -1,10 +1,8 @@
 ---
 deployment:
   tasks:
-    - export REPO=/home/velcitic/repositories/velciti-bore-log-backend
-    - export APP=/home/velcitic/api-borelog.velciti.com
-    - cd $REPO && npm ci && npm run build
-    - rm -rf $APP/dist && cp -r $REPO/dist $APP/dist
-    - cp $REPO/package.json $REPO/package-lock.json $APP/
-    - cd $APP && npm install --omit=dev
-    - mkdir -p $APP/tmp && touch $APP/tmp/restart.txt
+    - cd /home/velcitic/repositories/velciti-bore-log-backend && npm ci && npm run build
+    - rm -rf /home/velcitic/api-borelog.velciti.com/dist && cp -r /home/velcitic/repositories/velciti-bore-log-backend/dist /home/velcitic/api-borelog.velciti.com/dist
+    - cp /home/velcitic/repositories/velciti-bore-log-backend/package.json /home/velcitic/repositories/velciti-bore-log-backend/package-lock.json /home/velcitic/api-borelog.velciti.com/
+    - cd /home/velcitic/api-borelog.velciti.com && npm install --omit=dev
+    - mkdir -p /home/velcitic/api-borelog.velciti.com/tmp && touch /home/velcitic/api-borelog.velciti.com/tmp/restart.txt
