@@ -3,7 +3,7 @@ deployment:
   tasks:
     - export REPO=/home/velcitic/repositories/velciti-bore-log-backend
     - export APP=/home/velcitic/api-borelog.velciti.com
-    - cd $REPO && npm install && npm run build
+    - cd $REPO && npm install && npm run build && git checkout -- package-lock.json
     - rm -rf $APP/dist && cp -r $REPO/dist $APP/dist
     - cp $REPO/package.json $REPO/package-lock.json $APP/
     - . /home/velcitic/nodevenv/api-borelog.velciti.com/22/bin/activate && cd $APP && npm install --omit=dev
