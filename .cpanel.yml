@@ -1,12 +1,6 @@
-
 ---
 deployment:
   tasks:
     - cd /home/velcitic/repositories/velciti-bore-log-backend && npm install && npm run build
-    - mkdir -p /home/velcitic/borelog-api
-    - rm -rf /home/velcitic/borelog-api/dist
-    - cp -r /home/velcitic/repositories/velciti-bore-log-backend/dist /home/velcitic/borelog-api/
-    - cp /home/velcitic/repositories/velciti-bore-log-backend/package.json /home/velcitic/borelog-api/
-    - cd /home/velcitic/borelog-api && npm install --production
-    - mkdir -p /home/velcitic/borelog-api/tmp
-    - touch /home/velcitic/borelog-api/tmp/restart.txt
+    - mkdir -p /home/velcitic/repositories/velciti-bore-log-backend/tmp
+    - touch /home/velcitic/repositories/velciti-bore-log-backend/tmp/restart.txt
