@@ -1,6 +1,4 @@
 ---
 deployment:
   tasks:
-    - export REPO=/home/velcitic/repositories/velciti-bore-log-backend
-    - cd $REPO && npm install && npm run build
-    - mkdir -p $REPO/tmp && touch $REPO/tmp/restart.txt
+    - echo test
