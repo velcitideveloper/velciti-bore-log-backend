@@ -19,7 +19,25 @@ import { buildReportRows } from './types';
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-app.use(cors({ origin: 'https://borelog.velciti.com' }));
+const DEFAULT_ALLOWED_ORIGINS = ['http://localhost:5173', 'https://borelog.velciti.com'];
+const allowedOrigins = process.env.CORS_ALLOWED_ORIGINS
+  ? process.env.CORS_ALLOWED_ORIGINS.split(',').map((o) => o.trim())
+  : DEFAULT_ALLOWED_ORIGINS;
+
+const corsOptions: cors.CorsOptions = {
+  origin(origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error(`Origin ${origin} not allowed by CORS`));
+    }
+  },
+  methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+};
+
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
 app.use(express.json({ limit: '5mb' }));
 
 /** `BoreLog_[BoreholeNo]_[ProjectName].ext`, invalid filename characters stripped. */
@@ -189,6 +207,17 @@ app.post('/api/export-svg', async (req: Request, res: Response) => {
   } finally {
     if (browser) await browser.close();
   }
+});
+
+// ─── CORS error handler ──────────────────────────────────────
+// Without this, a rejected origin bubbles up as a default Express 500
+// with a full stack trace instead of a clean, header-less rejection.
+app.use((err: Error, _req: Request, res: Response, next: express.NextFunction) => {
+  if (err.message.startsWith('Origin ') && err.message.endsWith('not allowed by CORS')) {
+    res.status(403).json({ error: 'Origin not allowed by CORS' });
+    return;
+  }
+  next(err);
 });
 
 app.listen(PORT, () => {
