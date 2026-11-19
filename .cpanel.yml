@@ -3,5 +3,5 @@ deployment:
   tasks:
     - rm -rf /home/velcitic/api-borelog.velciti.com/dist && cp -r /home/velcitic/repositories/velciti-bore-log-backend/dist /home/velcitic/api-borelog.velciti.com/dist
     - cp /home/velcitic/repositories/velciti-bore-log-backend/package.json /home/velcitic/repositories/velciti-bore-log-backend/package-lock.json /home/velcitic/api-borelog.velciti.com/
-    - cd /home/velcitic/api-borelog.velciti.com && npm install --omit=dev --ignore-scripts
+    - cd /home/velcitic/api-borelog.velciti.com && /home/velcitic/nodevenv/api-borelog.velciti.com/22/bin/npm install --omit=dev --ignore-scripts
     - mkdir -p /home/velcitic/api-borelog.velciti.com/tmp && touch /home/velcitic/api-borelog.velciti.com/tmp/restart.txt
