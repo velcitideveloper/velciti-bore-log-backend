@@ -190,14 +190,14 @@ export async function buildExcelWorkbook(boreLog: BoreLog, graphImage?: Buffer):
     sptDepthCell.border = thin;
 
     const nValCell = ws.getCell(excelRow, COL.nVal);
-    if (spt) nValCell.value = `${spt.nValue}\n[${spt.blowCounts}]`;
+    if (spt) nValCell.value = `${spt.nValue || '—'}\n[${spt.blowCounts}]`;
     else if (isCore && row.isFirstRowOfLayer) nValCell.value = '-';
     nValCell.font = { name: 'Times New Roman', size: 10 };
     nValCell.alignment = { horizontal: 'center', vertical: 'middle', wrapText: true };
     nValCell.border = thin;
 
     const relDensCell = ws.getCell(excelRow, COL.relDens);
-    relDensCell.value = isCore ? '-' : (spt?.relativeDensity || '');
+    relDensCell.value = isCore ? '-' : (spt?.relativeDensity || '—');
     relDensCell.font = { name: 'Times New Roman', size: 10 };
     relDensCell.alignment = { horizontal: 'center', vertical: 'middle', wrapText: true };
     relDensCell.border = thin;
